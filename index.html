@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="rus">
+<head>
+	<meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="test">
+	<title>TEST</title>
+</head>
+
+<body>
+<div class="quiz-container" id="quiz">
+    <div class="quiz-header">
+      <h2 id="question">Question Text</h2>
+        <button><p>
+          <input type="radio" name="answer" id="a" class="answer">
+          <label for="a" id="a_text">Answer</label>
+        </p></button>
+        <button><p>
+          <input type="radio" name="answer" id="b" class="answer">
+          <label for="b" id="b_text">Answer</label>
+        </p></button>
+        <button><p>
+          <input type="radio" name="answer" id="c" class="answer">
+          <label for="c" id="c_text">Answer</label>
+        </p></button>
+    </div>
+    <button id="submit">Ответить</button>
+  </div>
+  <script src="script.js"></script>
+  <script>
+var password = "222";
+  while (k != password) {
+  var k = prompt("Введите пароль:");
+  if(k==password){alert('Пароль введен верно, нажмите, чтобы продолжить.')}
+  else if (k != password) {
+    alert("Неверный пароль!");
+    }
+}
+
+    const quizData = [
+    {
+        question: "1. Что такое Машинное обучение?",
+        a: "Это изучение компьютерных алгоритмов, которые могут автоматически улучшаться с помощью опыта и использования данных.",
+        b: "Это метод создания компьютерных алгоритмов для классификации данных на разные категории сложности и изучения. ",
+        c: "Особый метод использования алгоритмов для извлечения исходных данных выданной информации при работе с огромным количеством данных.",
+        correct: "a",
+    },
+    {
+        question: "2. Из чего состоит машинное обучение?",
+        a: "Данные, платформа, признаки. ",
+        b: "Алгоритм, табличные данные.",
+        c: "Данные, алгоритм, признаки.",
+        correct: "c",
+    },
+    {
+        question: "3. Машинное обучение делится на:",
+        a: "Только пять видов: классификация, регрессия, ассоциативные правила, кластеризация, уменьшение размерности.",
+        b: "Три вида: классическое, с подкреплением, нейросети.",
+        c: "Только на два типа обучения:с учителем и без учителя",
+        correct: "b",
+    },
+    {
+        question: "4. В чем главное различие между Нейросетями и другими видами машинного обучения?",
+        a: "Простые данные, без указания признаков, но отсуствием среды для взаимодействий.",
+        b: "Сложные данные без указания признаков.",
+        c: "Данные отсутствуют, но есть среда для взаимодействий.",
+        correct: "b",
+    },
+    {
+        question: "5. Что из нижеперечисленного является обучением с подкреплением?",
+        a: "Линейная регрессия статистики стоимости рынка. ",
+        b: "Распознавание фальшивых новостей.",
+        c: "Планирование бизнес-стратегии.",
+        correct: "c",
+    },
+];
+const quiz= document.getElementById('quiz')
+const answerEls = document.querySelectorAll('.answer')
+const questionEl = document.getElementById('question')
+const a_text = document.getElementById('a_text')
+const b_text = document.getElementById('b_text')
+const c_text = document.getElementById('c_text')
+const submitBtn = document.getElementById('submit')
+let currentQuiz = 0
+let score = 0
+loadQuiz()
+function loadQuiz() {
+    deselectAnswers()
+    const currentQuizData = quizData[currentQuiz]
+    questionEl.innerText = currentQuizData.question
+    a_text.innerText = currentQuizData.a
+    b_text.innerText = currentQuizData.b
+    c_text.innerText = currentQuizData.c
+}
+function deselectAnswers() {
+    answerEls.forEach(answerEl => answerEl.checked = false)
+}
+function getSelected() {
+    let answer
+    answerEls.forEach(answerEl => {
+        if(answerEl.checked) {
+            answer = answerEl.id
+        }
+    })
+    return answer
+}
+submitBtn.addEventListener('click', () => {
+    const answer = getSelected()
+    if(answer) {
+       if(answer === quizData[currentQuiz].correct) {
+           score++
+       }
+       currentQuiz++
+       if(currentQuiz < quizData.length) {
+           loadQuiz()
+       } else {
+           quiz.innerHTML = `
+           <h2>Поздравляю! Ты ответил ${score}/${quizData.length} правильно</h2>
+           <button onclick="location.reload()">Заново</button>
+           `
+       }
+    }
+})
+  </script>
+  <style>
+    body {
+	background: #c7b39b url(фото1.jpg); /* Цвет фона и путь к файлу */
+  background-repeat: no-repeat;
+	background-size: 100%;
+  border: solid 11px rgb(21, 0, 83);
+  outline: solid 20px rgb(7, 5, 125);
+  color: #fff;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  }
+  quiz-container{
+    
+    border-radius: 10px;
+    box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.1);
+    width: 600px;
+    overflow: hidden;
+  }
+  quiz-header{
+    padding: 4rem;
+  }
+  h2{
+    
+    padding: 1rem;
+    text-align: center;
+    margin: 0;
+  }
+  
+  checkbox[type='checkbox'],
+  label {
+    cursor: pointer;
+  }
+  
+  input[type='radio'] {
+    position: relative;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+  }
+  
+  input[type='radio']::before {
+    background-color: none;
+    border: 2px solid none(0, 0, 0);
+  }
+  
+  input[type='radio']:checked::after {
+    background-color: none(0, 0, 0);
+    transform: translate(-50%, -50%);
+    visibility: visible;
+  }
+
+  
+  button{
+    text-align: center;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      box-sizing:content-box ;
+      border-right: none;  
+      column-count:auto;
+      text-decoration: none;
+      margin-right: 500px; /* Отступ слева */
+      padding: 3px; /* Поля вокруг текста */
+      margin: auto ;
+      padding: 9px; 
+      width: 5000px;
+      max-width: 300px;
+      background: #fff; /* запасной цвет для старых браузеров */
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+      color: #000000;
+      letter-spacing: 3px;
+      transition: all 0.5s ease-out;
+  }
+  semi-transparent-button {
+    
+      display: block;
+      box-sizing: border-box;
+      margin: 0 auto;
+      padding: 8px;
+      width: 80%;
+      max-width: 300px;
+      background: #fff; /* запасной цвет для старых браузеров */
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: all 0.5s ease-out;
+      cursor: pointer;
+    }
+	</style>
+</div>
+</body>
+</html>
